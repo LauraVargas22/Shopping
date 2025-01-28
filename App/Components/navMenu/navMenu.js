@@ -41,7 +41,7 @@ export class NavMenu extends HTMLElement {
                   mainContent.innerHTML="<vender-component></vender-component>";
                   break;
                 case 'products':
-                  mainContent.innerHTML="<products-component></products-component>";
+                  mainContent.innerHTML="<producto-component></producto-component>";
                   break;
               }
               e.stopImmediatePropagation();
