@@ -1,4 +1,7 @@
-
+import '/App/Components/products/crearProducto.js';
+import "/App/Components/products/editarProducto.js";
+import "/App/Components/products/eliminarProducto.js";
+import "/App/Components/products/listarProducto.js";
 
 export class ProductoComponent extends HTMLElement {
     constructor(){
@@ -7,7 +10,7 @@ export class ProductoComponent extends HTMLElement {
     }
 
     render(){
-        this.innerHTML = `
+        this.innerHTML = /* html */ `
         <style rel="stylesheet">
             @import "./App/Components/products/productoStyle.css";
         </style>
@@ -19,20 +22,20 @@ export class ProductoComponent extends HTMLElement {
                 <a class="nav-link mnuproducto" href="#" data-verocultar='["#editarProducto",["#crearProducto", "#eliminarProducto", "#listarProducto"]]'>Editar Producto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active mnuproducto" aria-current="page" href="#" data-verocultar='["#eliminarProducto",["#crearProducto", "#listarProducto", "#editarProducto", ]]'>Eliminar Producto</a>
+                <a class="nav-link active mnuproducto" aria-current="page" href="#" data-verocultar='["#eliminarProducto",["#crearProducto", "#listarProducto", "#editarProducto"]]'>Eliminar Producto</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link mnuproducto" href="#" data-verocultar='["#listarProducto",["#crearProducto", "#editarProducto", "#eliminarProducto"]]'>Listar Productos</a>
             </li>
         </ul>
         <div class="container" id="crearProducto" style="display:block;">
-        <crear-producto></crear-producto>
+            <crear-producto></crear-producto>
         </div>
         <div class="container" id="editarProducto" style="display:none;">
             <editar-producto></editar-producto>
         </div> 
         <div class="container" id="eliminarProducto" style="display:block;">
-        <eliminar-producto></eliminar-producto>
+            <eliminar-producto></eliminar-producto>
         </div>
         <div class="container" id="listarProducto" style="display:none;">
             <listar-producto></listar-producto>
