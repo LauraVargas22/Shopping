@@ -36,7 +36,7 @@ const postProducto = async (datos) => {
 const patchProducto = async (datos,id) =>{
 
     try {
-        return await fetch(`${URL_API}/productos/${id}`, {
+        return await fetch(`${URL_API}/productos/${datos.id}`, {
             method: "PATCH",
             headers: myHeaders,
             body: JSON.stringify(datos)

@@ -126,20 +126,23 @@ export class EditarProducto extends HTMLElement {
             datos.id = document.querySelector("#id").value; // Recuperamos el ID del producto
 
             patchProductos(datos)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error(`Error en la solicitud PUT: ${response.status} - ${response.statusText}`);
-                    }
-                })
-                .then(responseData => {
-                    console.log("Producto actualizado:", responseData);
-                    alert("Producto actualizado correctamente");
-                })
-                .catch(error => {
-                    console.error("Error en la solicitud PUT:", error.message);
-                });
+            .then(response => {
+                // Verificar si la solicitud fue exitosa (código de respuesta en el rango 200)
+                if (response.ok) {
+                    return response.json(); // Devolver la respuesta como JSON
+                } else {
+                    // Si la respuesta no fue exitosa, lanzar una excepción
+                    throw new Error(`Error en la solicitud POST: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(responseData => {
+                console.log("Producto actualizado:", responseData);
+                // Hacer algo con la respuesta exitosa si es necesario
+            })
+            .catch(error => {
+                console.error("Error en la solicitud PUT:", error.message);
+                // Puedes manejar el error de otra manera si es necesario
+            });
         });
     }
 }
