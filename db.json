@@ -1,11 +1,11 @@
 {
   "productos": [
     {
-      "id": "194af15a062",
-      "nombreProducto": "Jamón",
-      "stock": "4",
-      "precioProducto": "7600",
-      "imageProduct": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNextbYgfe15dRsI668Qc4LbtR20NX75gk8Q&s"
+      "id": "194afa57413",
+      "nombreProducto": "Queso",
+      "stock": "23",
+      "precioProducto": "11000",
+      "imageProduct": "https://img.freepik.com/vector-gratis/dibujos-animados-aislados-queso-simple_1308-124064.jpg"
     }
   ]
 }
