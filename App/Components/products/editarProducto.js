@@ -12,14 +12,14 @@ export class EditarProducto extends HTMLElement {
             <input type="text" id="buscador" placeholder="Buscar producto..." class="form-control">
             <div id="listaProductos"></div>
             <form id="formEditarProducto" style="display: none;">
-                <!-- Aquí se renderiza el formulario dinámicamente -->
-                <button type="submit" class="btn btn-primary">Editar</button>
+                
             </form>
         </div>
         `;
         this.buscadorProducto();
     }
 
+    
     buscadorProducto = () => {
         const buscador = document.getElementById('buscador');
         buscador.addEventListener('input', () => {
@@ -30,20 +30,20 @@ export class EditarProducto extends HTMLElement {
 
     mostrarProductos = (busqueda = '') => {
         getProductos()
-            .then((productos) => {
-                const listaProductos = document.getElementById('listaProductos');
-                listaProductos.innerHTML = '';
-
-                const productosFiltrados = productos.filter((producto) =>
-                    producto.nombreProducto.toLowerCase().includes(busqueda)
-                );
-
-                productosFiltrados.forEach((producto) => {
-                    const item = document.createElement('div');
+        .then((productos) => {
+            const listaProductos = document.getElementById('listaProductos');
+            listaProductos.innerHTML = '';
+            
+            const productosFiltrados = productos.filter((producto) =>
+            producto.nombreProducto.toLowerCase().includes(busqueda)
+            );
+            
+            productosFiltrados.forEach((producto) => {
+                const item = document.createElement('div');
                     item.classList.add('producto-item');
                     item.innerHTML = /*html*/ `
                     <button class="btn btn-outline-primary btnSeleccionar" data-id="${producto.id}">
-                        ${producto.nombreProducto}
+                    ${producto.nombreProducto}
                     </button>
                     `;
                     listaProductos.appendChild(item);
@@ -53,33 +53,33 @@ export class EditarProducto extends HTMLElement {
             .catch((error) => {
                 console.error('Error en la solicitud GET:', error.message);
             });
-    }
-
-    seleccionarProducto = () => {
-        const btnSeleccionar = document.querySelectorAll('.btnSeleccionar');
-        btnSeleccionar.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                const idProducto = e.target.getAttribute("data-id");
+        }
+        
+        seleccionarProducto = () => {
+            const btnSeleccionar = document.querySelectorAll('.btnSeleccionar');
+            btnSeleccionar.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const idProducto = e.target.getAttribute("data-id");
                 this.mostrarFormulario(idProducto);
             });
         });
     }
-
+    
     mostrarFormulario = (idProducto) => {
         const formEditarProducto = document.getElementById('formEditarProducto');
         formEditarProducto.style.display = 'none';
-
+        
         getProductos()
-            .then((productos) => {
-                const producto = productos.find((producto) => producto.id === idProducto);
-
-                if (!producto) {
+        .then((productos) => {
+            const producto = productos.find((producto) => producto.id === idProducto);
+            
+            if (!producto) {
                     alert("Producto no encontrado");
                     return;
                 }
-
+                
                 const { id, nombreProducto, stock, precioProducto, imageProduct } = producto;
-
+                
                 formEditarProducto.innerHTML = /*html*/ `
                 <div class="row">
                     <div class="col">
@@ -90,42 +90,40 @@ export class EditarProducto extends HTMLElement {
                         <label for="nombreProducto" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" value="${nombreProducto}">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="stock" class="form-label">Stock</label>
-                        <input type="number" class="form-control" id="stock" name="stock" value="${stock}">
                     </div>
-                    <div class="col">
-                        <label for="precioProducto" class="form-label">Precio</label>
-                        <input type="number" class="form-control" id="precioProducto" name="precioProducto" value="${precioProducto}">
+                    <div class="row">
+                        <div class="col">
+                            <label for="stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="stock" name="stock" value="${stock}">
+                        </div>
+                        <div class="col">
+                            <label for="precioProducto" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precioProducto" name="precioProducto" value="${precioProducto}">
+                        </div>
+                        <div class="col">
+                            <label for="imageProduct" class="form-label">Imágen</label>
+                            <input type="url" class="form-control" id="imageProduct" name="imageProduct" value="${imageProduct}">
+                        </div>
                     </div>
-                    <div class="col">
-                        <label for="imageProduct" class="form-label">Imágen</label>
-                        <input type="url" class="form-control" id="imageProduct" name="imageProduct" value="${imageProduct}">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Editar</button>
+                <button id="btnEditar" type="submit" class="btn btn-primary" data-id="${id}">Editar</button>
                 `;
-
+                
                 formEditarProducto.style.display = 'block';
                 this.editarData();
             })
             .catch((error) => {
                 console.error('Error en la solicitud GET:', error.message);
             });
-    }
+        }
 
     editarData = () => {
-        const formEditarProducto = document.getElementById('formEditarProducto');
-
-        formEditarProducto.addEventListener("submit", (e) => {
+        const formEditarProducto = document.querySelector('#formEditarProducto');
+        document.querySelector('#btnEditar').addEventListener("click",(e) =>{
             e.preventDefault();
 
             const datos = Object.fromEntries(new FormData(formEditarProducto).entries());
-            datos.id = document.querySelector("#id").value; // Recuperamos el ID del producto
-
-            patchProductos(datos)
+            const idProducto = e.target.getAttribute("data-id");
+            patchProductos(datos,idProducto)
             .then(response => {
                 // Verificar si la solicitud fue exitosa (código de respuesta en el rango 200)
                 if (response.ok) {
@@ -136,14 +134,14 @@ export class EditarProducto extends HTMLElement {
                 }
             })
             .then(responseData => {
-                console.log("Producto actualizado:", responseData);
                 // Hacer algo con la respuesta exitosa si es necesario
+                console.log("Producto actualizado:", responseData);
             })
             .catch(error => {
-                console.error("Error en la solicitud PUT:", error.message);
+                console.error('Error en la solicitud POST:', error.message);
                 // Puedes manejar el error de otra manera si es necesario
             });
-        });
+        })
     }
 }
 

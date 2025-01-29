@@ -36,13 +36,13 @@ const postProducto = async (datos) => {
 const patchProducto = async (datos,id) =>{
 
     try {
-        return await fetch(`${URL_API}/productos/${datos.id}`, {
+        return await fetch(`${URL_API}/productos/${id}`, {
             method: "PATCH",
             headers: myHeaders,
             body: JSON.stringify(datos)
         });
     } catch (error) {
-        console.error('Error en la solicitud POST:', error.message);
+        console.error('Error en la solicitud PATCH:', error.message);
     }
 
 }

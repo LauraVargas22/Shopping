@@ -9,7 +9,7 @@ export class CrearProducto extends HTMLElement {
     }
 
     render() {
-        let id = Date.now().toString(16);
+        let id = Date.now();
         this.innerHTML = /* html */ `
         <form id="formCrearProducto">
             <div class="row">

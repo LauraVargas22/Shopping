@@ -1,11 +1,18 @@
 {
   "productos": [
     {
-      "id": "194afa57413",
+      "id": "1738150484147",
+      "nombreProducto": "torta",
+      "stock": "30",
+      "precioProducto": "35000",
+      "imageProduct": "https://www.nestleprofessional-latam.com/sites/default/files/styles/np_recipe_detail/public/2024-08/torta-chocolate-princesa-decorada.jpg?itok=sYrv9ojc"
+    },
+    {
+      "id": "1738154711065",
       "nombreProducto": "Queso",
-      "stock": "23",
-      "precioProducto": "11000",
-      "imageProduct": "https://img.freepik.com/vector-gratis/dibujos-animados-aislados-queso-simple_1308-124064.jpg"
+      "stock": "34",
+      "precioProducto": "12000",
+      "imageProduct": "https://images.squarespace-cdn.com/content/v1/561718ebe4b062a227c4fcf2/396c3f24-3736-4bc6-90f0-ef22b331bfcf/Portadas+YouTube.png"
     }
   ]
 }
