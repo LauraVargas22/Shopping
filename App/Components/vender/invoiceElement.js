@@ -141,10 +141,10 @@ export class InvoiceElement extends HTMLElement {
         </div>
         <div class="d-flex justify-content-center">
             <!--Botón de confirmación de la compra-->
-            <button id="confirm" type="button" class="btn btn-primary">Confirm</button>
+            <button id="btnConfirm" type="button" class="btn btn-primary">Confirm</button>
         </div>
         <!--Botón para cerrar popup-->
-        <button id="popUpClose" type="button" class="close">&times;</button>
+        <button id="btnPopUpClose" type="button" class="close">&times;</button>
         </div>
     </div>
         `;
@@ -162,6 +162,10 @@ export class InvoiceElement extends HTMLElement {
         //Evento para agregar un nuevo formulario para otro producto en el contenedor
         document.querySelector('#addProduct').addEventListener('click', (e) => {
             divContainerProducts.insertAdjacentHTML('beforeend', this.addProduct());
+        });
+
+        document.querySelector('#btnInvoice').addEventListener('click', () => {
+            this.showInvoice(); //PopUp
         });
     }
     
@@ -300,6 +304,53 @@ export class InvoiceElement extends HTMLElement {
     return productsHTML;
     }
 
+    showInvoice = () => {
+        //Selecciona el contenedor del popup
+        const popup = document.getElementById("popup");
+        //Estilo del popup al producirse el evento
+        popup.style.display = "block";
+    
+        //Desestructura los datos ingresados por el usuario
+        
+        //Evento al producirse el cierre del popup
+        document.querySelector('#btnPopUpClose').addEventListener('click', () => {
+            this.closePopup(); //PopUp
+        });
+    
+        //Evento al confirmar el pago
+        document.querySelector('#btnConfirm').addEventListener('click', () => {
+            this.confirmInvoice(); //PopUp
+        });
+    }
+    
+    /**
+     * Función para cerrar el popup
+     */
+    closePopup = () => {
+        //Selecciona el popup
+        const popup = document.getElementById('popup');
+        //Modifica los estilos del popup al cerrarse
+        popup.style.display = "none"; //Oculta el popup
+    }
+    
+    /**
+     * Función para confirmar compra
+     */
+    confirmInvoice = () => {
+        //Selecciona el popup
+        const popup = document.getElementById('popup');
+        //Modifica los estilos del popup al cerrarse
+        popup.style.display = "none"; //Oculta el popup
+    
+        Swal.fire({
+            title: "Thank you for your purchase.",
+            icon: "success",
+            draggable: true
+          }).then(() => {
+            // Recarga la página después de cerrar el popup
+            location.reload();
+        });
+    }
     
 }
 customElements.define("invoice-element", InvoiceElement);

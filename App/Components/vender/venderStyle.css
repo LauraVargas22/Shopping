@@ -295,7 +295,7 @@ table th, table td {
 }
 
 /*Botón Confirmar Pago*/
-#confirm {
+#btnConfirm {
   font-family: "Courier Prime", serif;
   font-weight: 600;
   background: #0E1047;
