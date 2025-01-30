@@ -22,7 +22,7 @@ export class ProductoComponent extends HTMLElement {
                 <a class="nav-link mnuproducto" href="#" data-verocultar='["#editarProducto",["#crearProducto", "#eliminarProducto", "#listarProducto"]]'>Editar Producto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active mnuproducto" aria-current="page" href="#" data-verocultar='["#eliminarProducto",["#crearProducto", "#listarProducto", "#editarProducto"]]'>Eliminar Producto</a>
+                <a class="nav-link mnuproducto" href="#" data-verocultar='["#eliminarProducto",["#crearProducto", "#listarProducto", "#editarProducto"]]'>Eliminar Producto</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link mnuproducto" href="#" data-verocultar='["#listarProducto",["#crearProducto", "#editarProducto", "#eliminarProducto"]]'>Listar Productos</a>
@@ -34,7 +34,7 @@ export class ProductoComponent extends HTMLElement {
         <div class="container" id="editarProducto" style="display:none;">
             <editar-producto></editar-producto>
         </div> 
-        <div class="container" id="eliminarProducto" style="display:block;">
+        <div class="container" id="eliminarProducto" style="display:none;">
             <eliminar-producto></eliminar-producto>
         </div>
         <div class="container" id="listarProducto" style="display:none;">

@@ -18,36 +18,35 @@ export class NavMenu extends HTMLElement {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a id="text_navbar" class="nav-link active" aria-current="page" href="#" data-verocultar='["vender"]'>Vender</a>
+                  <a class="nav-link active navbar" aria-current="page" href="#" data-verocultar='["#vender", ["#producto"]]'>Vender</a>
                 </li>
                 <li class="nav-item">
-                  <a id="text_navbar" class="nav-link" href="#" data-verocultar='["products"]'>Productos</a>
-                </li>
-                <li class="nav-item">
-                  <a id="text_navbar" class="nav-link disabled" aria-disabled="true">Disabled</a>
+                  <a class="nav-link navbar" aria-current="page" href="#" data-verocultar='["#producto", ["#vender"]]'>Productos</a>
                 </li>
               </ul>
             </div>
           </div>
-        </nav>         
+        </nav>
+        <div class="container" id="vender" style="display:block;">
+          <vender-component></vender-component>
+        </div>
+        <div class="container" id="producto" style="display:none;">
+          <producto-component></producto-component>
+        </div>
         `;
-        this.querySelectorAll(".nav-link").forEach((val, id) => {
-          val.addEventListener("click", (e)=>{
-              let data = JSON.parse(e.target.dataset.verocultar);
-              let mainContent = document.querySelector('#mainContent');
-              mainContent.innerHTML= "";
-              switch (data[0]){
-                case 'vender':
-                  mainContent.innerHTML="<vender-component></vender-component>";
-                  break;
-                case 'products':
-                  mainContent.innerHTML="<producto-component></producto-component>";
-                  break;
-              }
-              e.stopImmediatePropagation();
-              e.preventDefault();
-          })
-      });
+        this.querySelectorAll(".navbar").forEach((val, id) => {
+            val.addEventListener("click", (e)=>{
+                let data = JSON.parse(e.target.dataset.verocultar);
+                let cardVer = document.querySelector(data[0]);
+                cardVer.style.display = 'block';
+                data[1].forEach(card => {
+                    let cardActual = document.querySelector(card);
+                    cardActual.style.display = 'none';
+                });
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            })
+        });
     }
 }
-customElements.define("nav-menu",NavMenu);
+customElements.define("nav-menu", NavMenu);

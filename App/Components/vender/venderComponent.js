@@ -1,5 +1,4 @@
-import "/App/Components/vender/RegisterElement.js";
-import "/App/Components/vender/headerElement.js";
+import "/App/Components/vender/InvoiceElement.js";
 
 export class VenderComponent extends HTMLElement {
     constructor(){
@@ -13,10 +12,8 @@ export class VenderComponent extends HTMLElement {
             <h1 class="title">ELECTRONIC INVOICE</h1>
             <form id="dataProducts" class="form">
                 <!--Web Component Personal Information-->
-                <header-element></header-element>
+                <invoice-element></invoice-element>
             </form>
-            <!--Web Component Resgistro de productos y factura final-->
-            <register-element></register-element>
         </div>
         `;
     }
