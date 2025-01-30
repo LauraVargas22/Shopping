@@ -3,3 +3,32 @@
     opacity: 0.5;  /* Esto es solo un ejemplo, puedes ajustar según tus necesidades */
     pointer-events: none;
 }
+
+#card__listar {
+    height: 22rem;
+}
+
+.card__titles {
+    padding-top: 0.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+}
+.card__price {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+}
+
+.btnSeleccionar {
+    margin: 0.5rem;
+}
+
+#btnEditar {
+    margin: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}

@@ -31,10 +31,10 @@ export class ListarProducto extends HTMLElement {
                 divItems.classList.add('col');
                 //Cambios dentro del archivo HTML, se completa la información con la data adquirida
                 divItems.innerHTML = /*html*/`
-                <div class="card">
+                <div id="card__listar" class="card">
                     <img class="img-fluid" src="${imageProduct}" alt="Movie Image">
-                    <h1 class="card__title">${nombreProducto}</h1>
-                    <p class="movie__description">${precioProducto}</p>
+                    <h1 class="card__titles">${nombreProducto}</h1>
+                    <p class="card__price">${precioProducto}</p>
                 </div>
                 `;
                 productosCards.appendChild(divItems);
