@@ -17,27 +17,43 @@
   ],
   "facturas": [
     {
-      "numInvoice": "194b3f9aea2",
-      "customerData": {
-        "numID": "123456789",
-        "names": "Pedro",
-        "surname": "Perez",
-        "address": "Calle 123",
-        "email": "pedroPerez@gmail.com"
-      },
-      "products": [
-        {
-          "id": "194b3fbf6ad",
-          "nombreProducto": "Queso Costeño",
-          "cantidad": "2",
-          "precioProducto": "12000",
-          "subT": "24000"
+      "id": "2281",
+      "numInvoice": {
+        "personalData": {
+          "numID": "1234",
+          "names": "Pedro",
+          "surname": "Sierra",
+          "address": "CRA 5 #5-47",
+          "email": "lauramarianavargasrojas22@gmail.com"
+        },
+        "products": [
+          {
+            "cod": "",
+            "nameProduct": "qu",
+            "unitValue": 12,
+            "quantity": 3,
+            "subT": 36
+          },
+          {
+            "cod": "",
+            "nameProduct": "",
+            "unitValue": 0,
+            "quantity": 0,
+            "subT": 0
+          },
+          {
+            "cod": "",
+            "nameProduct": "",
+            "unitValue": 0,
+            "quantity": 0,
+            "subT": 0
+          }
+        ],
+        "summary": {
+          "subTotal": 36,
+          "vat": "6.84",
+          "total": "42.84"
         }
-      ],
-      "summary": {
-        "subtotal": "24000",
-        "total": "28560",
-        "vat": "4560"
       }
     }
   ]

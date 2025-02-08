@@ -1,3 +1,5 @@
+import { getDatas, postDatas } from "../../../Apis/invoice/invoiceApi.js";
+
 export class InvoiceElement extends HTMLElement {
     constructor(){
         super();
@@ -165,7 +167,17 @@ export class InvoiceElement extends HTMLElement {
         });
 
         document.querySelector('#btnInvoice').addEventListener('click', () => {
-            this.showInvoice(); //PopUp
+            this.saveData();
+        });
+
+        //Evento al producirse el cierre del popup
+        document.querySelector('#btnPopUpClose').addEventListener('click', () => {
+            this.closePopup(); //PopUp
+        });
+    
+        //Evento al confirmar el pago
+        document.querySelector('#btnConfirm').addEventListener('click', () => {
+            this.confirmInvoice(); //PopUp
         });
     }
     
@@ -304,33 +316,104 @@ export class InvoiceElement extends HTMLElement {
     return productsHTML;
     }
 
-    showInvoice = () => {
+    saveData(){
+        const personalData = {
+            numID: document.getElementById('numId')?.value || '', //Identificación
+            names: document.getElementById('names')?.value || '', //Nombres
+            surname: document.getElementById('surname')?.value || '', //Apellidos
+            address: document.getElementById('address')?.value || '', //Dirección
+            email: document.getElementById('email')?.value || '', //Email
+        }
+    
+        //Inicialización de array para almacenar los productos
+        const products = [];
+        //Selecciona TODOS los elementos con la clase 'producto-row'
+        const productRows = document.querySelectorAll('.product-row');
+        //Por cada elemento seleccionado
+        productRows.forEach((tr) => {
+            //Obtener el valor del atributo
+            const id = tr.dataset.id;
+            //Por cada producto selecciona los datos y los almacena
+            products.push({
+                cod: document.getElementById(`cod${id}`)?.value || '', //Código
+                nameProduct: document.getElementById(`nameProduct${id}`)?.value || '', //Nombre del Producto
+                unitValue: parseFloat(document.getElementById(`unitValue${id}`)?.value || 0), //Valor Unitario
+                quantity: parseFloat(document.getElementById(`quantity${id}`)?.value || 0), //Cantidad
+                subT: parseFloat(document.getElementById(`tableSubTotal${id}`)?.textContent || 0), //Subtotal
+            });
+        });
+    
+        //Toma los valores tomados como parámetros
+        const summary =  {
+            subTotal: this.summarySubTotal,
+            vat: this.summaryVat,
+            total: this.summaryTotal,
+        };
+    
+        //Toda la información obtenida la almacena en un objeto literal
+        const invoiceModels = {
+            numInvoice: {
+                personalData,
+                products,
+                summary,
+            },
+        };
+
+        postDatas(invoiceModels)
+        .then(response => response.json())
+        .then(responseData => {
+            console.log("Data Guardados");
+            this.showInvoice(invoiceModels);
+        })
+        .catch(error => {
+            console.log("Error")
+        })
+    }
+
+    showInvoice = (invoiceModels) => {
         //Selecciona el contenedor del popup
         const popup = document.getElementById("popup");
         //Estilo del popup al producirse el evento
         popup.style.display = "block";
-    
-        //Desestructura los datos ingresados por el usuario
+
+        document.getElementById('popUpName').textContent = invoiceModels.numInvoice.personalData.names;
+        document.getElementById('popUpID').textContent = invoiceModels.numInvoice.personalData.numID;
         
-        //Evento al producirse el cierre del popup
-        document.querySelector('#btnPopUpClose').addEventListener('click', () => {
-            this.closePopup(); //PopUp
-        });
+        //Selecciona el cuerpo de la tabla del popup
+        const tableBody = document.querySelector("#invoiceProducts tbody");
+        tableBody.innerHTML = ""; // Limpiar contenido anterior
     
-        //Evento al confirmar el pago
-        document.querySelector('#btnConfirm').addEventListener('click', () => {
-            this.confirmInvoice(); //PopUp
+        invoiceModels.numInvoice.products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.quantity}</td>
+                <td>${product.nameProduct}</td>
+                <td>${product.unitValue}</td>
+                <td>${product.subT}</td>
+            `;
+            tableBody.appendChild(row);
         });
+
+        document.getElementById('popUpSubTotal').textContent = `Subtotal: ${invoiceModels.numInvoice.summary.subTotal}`;
+        document.getElementById('popUpVat').textContent = `VAT: ${invoiceModels.numInvoice.summary.vat}`;
+        document.getElementById('popUpTotal').textContent = `Total: ${invoiceModels.numInvoice.summary.total}`;
     }
     
     /**
      * Función para cerrar el popup
      */
     closePopup = () => {
-        //Selecciona el popup
-        const popup = document.getElementById('popup');
-        //Modifica los estilos del popup al cerrarse
-        popup.style.display = "none"; //Oculta el popup
+        const btnPopUpClose = document.getElementById('btnPopUpClose');
+        if (btnPopUpClose) {
+            btnPopUpClose.addEventListener('click', () => {
+                const popup = document.getElementById('popup');
+                if (popup) {
+                    popup.style.display = "none"; // Oculta el popup
+                }
+            });
+        } else {
+            console.error("No se encontró el botón de cierre del popup (#btnPopUpClose)");
+        }
     }
     
     /**
@@ -346,11 +429,11 @@ export class InvoiceElement extends HTMLElement {
             title: "Thank you for your purchase.",
             icon: "success",
             draggable: true
-          }).then(() => {
+          })
+          .then(() => {
             // Recarga la página después de cerrar el popup
             location.reload();
         });
     }
-    
 }
 customElements.define("invoice-element", InvoiceElement);
